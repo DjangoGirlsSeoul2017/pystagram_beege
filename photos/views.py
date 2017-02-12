@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from photos.models import Photo
+from django.shortcuts import get_object_or_404
 
 
 def hello(request):
@@ -7,4 +9,13 @@ def hello(request):
 
 
 def detail(request, pk):
-    return HttpResponse('photo id:' + pk)
+    try:
+        photo = get_object_or_404(Photo, pk=pk)
+    except Photo.DoesNotExist:
+        return HttpResponse('Unable to find photo for that key')
+    messages = (
+        '<p>Primary key for photo is {pk}</p>'.format(pk=photo.pk),
+        '<p>Photo address is {url}</p>'.format(url=photo.image.url),
+        '<p><img src="{url}"></p>'.format(url=photo.image.url)
+    )
+    return HttpResponse('\n'.join(messages))
