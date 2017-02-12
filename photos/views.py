@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from photos.models import Photo
+from .models import Photo
+from .forms import PhotoForm
 from django.shortcuts import get_object_or_404
 
 
@@ -19,3 +20,11 @@ def detail(request, pk):
         '<p><img src="{url}"></p>'.format(url=photo.image.url)
     )
     return HttpResponse('\n'.join(messages))
+
+
+def create(request):
+    form = PhotoForm()
+    ctx = {
+        'form': form,
+    }
+    return render(request, 'edit.html', ctx)
