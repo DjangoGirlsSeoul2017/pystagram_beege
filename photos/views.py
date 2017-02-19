@@ -26,10 +26,13 @@ def create(request):
     if request.method == "GET":
         form = PhotoForm()
     elif request.method == "POST":
-        form = PhotoForm(request.POST, request.FILES)
+        form = PhotoForm(request.POST, request.FILES)  # i don't know how this constructor works
 
         if form.is_valid():
-            obj = form.save()
+            obj = form.save(commit=False)  # by saving the form, we get the Photo model back
+            obj.user = request.user  # now we can assign the user
+            obj.save()  # and save the Photo with the user
+
             return redirect(obj)
 
     ctx = {

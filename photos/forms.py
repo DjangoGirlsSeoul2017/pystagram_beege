@@ -6,16 +6,7 @@ from .models import Photo
 
 
 class PhotoForm(forms.ModelForm):
-    image = forms.ImageField()
-    filtered_image = forms.ImageField()
-    content = forms.CharField(
-        max_length=500,
-        required=False,
-        widget=forms.Textarea
-    )
-    created_at = forms.DateTimeField(required=False)
-
     class Meta:
         model = Photo
         fields = ('image', 'content',)
-        exclude = ('filtered_image', )
+
