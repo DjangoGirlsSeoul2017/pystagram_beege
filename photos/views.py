@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Photo
@@ -22,6 +23,7 @@ def detail(request, pk):
     return HttpResponse('\n'.join(messages))
 
 
+@login_required
 def create(request):
     if request.method == "GET":
         form = PhotoForm()
