@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf import settings
+from django.conf.urls import include
 from django.conf.urls import url
 from django.conf.urls.static import static
 from django.contrib import admin
@@ -25,7 +26,7 @@ urlpatterns = [
     url(r'^hello/$', hello),
     url(r'^photos/(?P<pk>[0-9]+)/$', detail, name='detail'),
     url(r'^photos/upload/$', create, name='create'),
-url(
+    url(
         r'^accounts/login/',
         auth_views.login,
         name='login',
@@ -41,4 +42,5 @@ url(
             'next_page': settings.LOGIN_URL,
         }
     ),
+    url(r'^users/', include('profiles.urls')),
 ] + static('upload_files', document_root=settings.MEDIA_ROOT)
